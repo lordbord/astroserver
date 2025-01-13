@@ -1,11 +1,105 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="jordisbored.xyz">
+    <div class="max-w-2xl mx-auto mt-8">
+        <div class="font-kode-mono space-y-6 text-terminal-green">
+            <!-- Welcome Message -->
+            <div class="space-y-2">
+                <p class="typing-effect">$ whoami</p>
+                <p class="text-terminal-green-dim">jordisbored</p>
+                <p class="typing-effect">$ cat welcome.txt</p>
+                <div class="text-terminal-green-dim whitespace-pre-line">
+                    Welcome to my digital space! I'm a software developer and tech enthusiast.
+                    I build things for the web and write about technology.
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="space-y-2">
+                <p class="typing-effect">$ ls ./skills/</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-terminal-green-dim">
+                    <span>> javascript</span>
+                    <span>> python</span>
+                    <span>> react</span>
+                    <span>> node.js</span>
+                    <span>> docker</span>
+                    <span>> linux</span>
+                </div>
+            </div>
+
+            <!-- Latest Projects -->
+            <div class="space-y-2">
+                <p class="typing-effect">$ ls ./projects/latest/</p>
+                <div class="space-y-4 text-terminal-green-dim">
+                    <div class="border border-terminal-green/20 p-4 rounded-lg hover:bg-terminal-green/5 transition-colors">
+                        <h3 class="text-terminal-green">> Project One</h3>
+                        <p>A modern web application built with React and Node.js</p>
+                    </div>
+                    <div class="border border-terminal-green/20 p-4 rounded-lg hover:bg-terminal-green/5 transition-colors">
+                        <h3 class="text-terminal-green">> Project Two</h3>
+                        <p>Mobile-first e-commerce platform with real-time updates</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="space-y-2">
+                <p class="typing-effect">$ ls ./navigation/</p>
+                <div class="space-y-2">
+                    <a href="/blog" class="block p-2 border border-terminal-green/20 rounded-lg hover:bg-terminal-green/5 transition-colors">
+                        <span class="text-terminal-green">> cd ./blog</span>
+                        <span class="text-terminal-green-dim ml-4">// Read my thoughts and tutorials</span>
+                    </a>
+                    <a href="/projects" class="block p-2 border border-terminal-green/20 rounded-lg hover:bg-terminal-green/5 transition-colors">
+                        <span class="text-terminal-green">> cd ./projects</span>
+                        <span class="text-terminal-green-dim ml-4">// View my work</span>
+                    </a>
+                    <a href="/about" class="block p-2 border border-terminal-green/20 rounded-lg hover:bg-terminal-green/5 transition-colors">
+                        <span class="text-terminal-green">> cd ./about</span>
+                        <span class="text-terminal-green-dim ml-4">// Learn more about me</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="space-y-2">
+                <p class="typing-effect">$ cat contact.txt</p>
+                <div class="text-terminal-green-dim space-y-2">
+                    <p>Feel free to reach out:</p>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/jordisbored" target="_blank" rel="noopener noreferrer" 
+                           class="hover:text-terminal-green transition-colors">
+                            > github
+                        </a>
+                        <a href="https://twitter.com/jordisbored" target="_blank" rel="noopener noreferrer"
+                           class="hover:text-terminal-green transition-colors">
+                            > twitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </Layout>
+
+<style>
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+
+    .typing-effect {
+        position: relative;
+        white-space: nowrap;
+        margin: 0;
+        animation: typing 2s steps(40, end);
+    }
+
+    /* Add a blinking cursor to the last typing effect */
+    .typing-effect:last-of-type::after {
+        content: "_";
+        animation: cursor-blink 1s infinite;
+    }
+</style> 

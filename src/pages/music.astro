@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface Track {
+    title: string;
+    url: string;
+}
+
+interface Tool {
+    name: string;
+    url?: string;
+}
+
+interface ToolCategory {
+    name: string;
+    items: Tool[];
+}
+
+const tools: ToolCategory[] = [
+    {
+        name: 'Hardware',
+        items: [
+            { name: 'Novation Launchkey MK3 61-key' },
+            { name: 'Arturia Microfreak' },
+            { name: 'Elektron Digitakt' },
+            { name: 'Korg Volca FM' }
+        ]
+    },
+    {
+        name: 'Plugins',
+        items: [
+            { name: 'Amigo', url: 'https://tal-software.com/products/tal-filter' },
+            { name: 'Synplant 2', url: 'https://soniccharge.com/synplant' },
+            { name: 'Vital', url: 'https://vital.audio' },
+            { name: 'NuCat', url: 'https://www.kvraudio.com/product/nucat-by-nucat-audio' }
+        ]
+    },
+    {
+        name: 'DAW',
+        items: [
+            { name: 'Ableton Live 11 Suite' }
+        ]
+    }
+];
+
+const commonClasses = {
+    section: 'mb-8 p-6 bg-black/30 border border-[var(--terminal-green-dim)] rounded-lg',
+    title: 'text-2xl font-kode-mono text-[var(--terminal-green)] mb-4',
+    list: 'space-y-2',
+    item: 'text-[var(--terminal-green-dim)] hover:text-[var(--terminal-green)] transition-colors'
+};
+---
+
+<Layout title="Music | jordisbored.xyz">
+    <main class="container mx-auto px-4 py-8 mt-16">
+        <section class={commonClasses.section}>
+            <h1 class={commonClasses.title}>
+                <span class="text-[var(--terminal-green-dim)]">$</span> cat latest_tracks.txt
+            </h1>
+            <div class="soundcloud-container">
+                <iframe
+                    width="100%"
+                    height="450"
+                    scrolling="no"
+                    frameborder="no"
+                    allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/jordisbored&color=%2300ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+                ></iframe>
+            </div>
+        </section>
+
+        <section class={commonClasses.section}>
+            <h2 class={commonClasses.title}>
+                <span class="text-[var(--terminal-green-dim)]">$</span> ls tools/
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {tools.map(category => (
+                    <div class="tool-category">
+                        <h3 class="text-xl text-[var(--terminal-green)] mb-2">{category.name}/</h3>
+                        <ul class={commonClasses.list}>
+                            {category.items.map(item => (
+                                <li class={commonClasses.item}>
+                                    {item.url ? (
+                                        <a href={item.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
+                                            <span class="text-[var(--terminal-green-dim)]">></span> {item.name}
+                                        </a>
+                                    ) : (
+                                        <span><span class="text-[var(--terminal-green-dim)]">></span> {item.name}</span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    .soundcloud-container {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--terminal-green-dim);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .tool-category {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--terminal-green-dim);
+        border-radius: 0.5rem;
+        padding: 1rem;
+    }
+
+    iframe {
+        border-radius: 0.25rem;
+    }
+</style> 

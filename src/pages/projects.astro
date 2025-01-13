@@ -1,0 +1,358 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const projects = [
+    {
+        name: 'This Website',
+        description: 'A modern web application built with Astro and Tailwind. Features real-time updates and a clean, minimal interface.',
+        tech: ['Astro', 'Tailwind', 'JavaScript', 'HTML', 'CSS'],
+        links: {
+            github: 'https://github.com/lordbord/jordisbored.xyz',
+            demo: 'https://jordisbored.xyz'
+        },
+        status: 'active'
+    },
+    {
+        name: 'CLI Tool Beta',
+        description: 'Command-line productivity tool written in Node.js. Helps developers automate common tasks and workflows.',
+        tech: ['Node.js', 'Clap', 'SQLite'],
+        links: {
+            github: 'https://github.com/lordbord/cli-tool-beta'
+        },
+        status: 'maintenance'
+    },
+    {
+        name: 'lord jord',
+        description: 'Ableton Live projects. Music and sound design.',
+        tech: ['Ableton Live'],
+        links: {
+            github: 'https://github.com/lordbord/lord-jord',
+            soundcloud: 'https://soundcloud.com/jordisbored'
+        },
+        status: 'experimental'
+    },
+];
+---
+
+<Layout title="Projects | jordisbored.xyz">
+    <div class="projects-container">
+        <header>
+            <p class="typing-effect" data-text="$ cd ~/projects">$ cd ~/projects</p>
+            <h1 class="command-response" data-text="> ls -la">> ls -la</h1>
+        </header>
+
+        <div class="projects-grid">
+            {projects.map(project => (
+                <article class="project-card" data-status={project.status}>
+                    <div class="terminal-bar">
+                        <div class="terminal-buttons">
+                            <span class="terminal-button close"></span>
+                            <span class="terminal-button minimize"></span>
+                            <span class="terminal-button maximize"></span>
+                        </div>
+                        <div class="terminal-title">project.sh</div>
+                    </div>
+                    <header class="project-header">
+                        <div class="title-bar">
+                            <h2 class="project-title command-text" data-text={`> ${project.name}`}>> {project.name}</h2>
+                            <span class={`status-badge ${project.status}`}>
+                                [{project.status}]
+                            </span>
+                        </div>
+                        <p class="project-description terminal-output">{project.description}</p>
+                    </header>
+
+                    <div class="project-tech">
+                        <div class="command command-text" data-text="$ tech --list">$ tech --list</div>
+                        <div class="tech-tags terminal-output">
+                            {project.tech.map(tech => (
+                                <span class="tech-tag">#{tech.toLowerCase()}</span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <footer class="project-links">
+                        <div class="command command-text" data-text="$ links --all">$ links --all</div>
+                        <div class="link-list terminal-output">
+                            {Object.entries(project.links).map(([type, url]) => (
+                                <a href={url} target="_blank" rel="noopener noreferrer" class="project-link">
+                                    <span class="cursor">></span> {type}
+                                </a>
+                            ))}
+                        </div>
+                    </footer>
+                </article>
+            ))}
+        </div>
+
+        <footer class="page-footer">
+            <p class="command command-text" data-text="$ echo 'More projects coming soon...'">$ echo "More projects coming soon..."</p>
+            <a href="https://github.com/jordisbored" target="_blank" rel="noopener noreferrer" class="github-link">
+                <span class="cursor">></span> View more on GitHub
+            </a>
+        </footer>
+    </div>
+</Layout>
+
+<style>
+    .projects-container {
+        max-width: 64rem;
+        margin: 0 auto;
+    }
+
+    header {
+        margin-bottom: 3rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .project-card {
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        background: rgba(0, 255, 0, 0.05);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .project-card:hover {
+        transform: translateY(-2px);
+        background: rgba(0, 255, 0, 0.08);
+        border-color: rgba(0, 255, 0, 0.3);
+    }
+
+    .project-header {
+        flex-grow: 1;
+    }
+
+    .title-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .project-title {
+        font-size: 1.5rem;
+        color: var(--terminal-green);
+    }
+
+    .status-badge {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'Kode Mono', monospace;
+    }
+
+    .status-badge.active {
+        background: rgba(0, 255, 0, 0.1);
+        color: #00ff00;
+    }
+
+    .status-badge.maintenance {
+        background: rgba(255, 165, 0, 0.1);
+        color: #ffa500;
+    }
+
+    .status-badge.experimental {
+        background: rgba(255, 0, 255, 0.1);
+        color: #ff00ff;
+    }
+
+    .project-description {
+        color: var(--terminal-green-dim);
+        line-height: 1.6;
+    }
+
+    .command {
+        color: var(--terminal-green);
+        margin-bottom: 0.5rem;
+        font-family: 'Kode Mono', monospace;
+    }
+
+    .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tech-tag {
+        color: var(--terminal-green-dim);
+        font-size: 0.9rem;
+    }
+
+    .link-list {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .project-link {
+        color: var(--terminal-green);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .project-link:hover {
+        color: var(--terminal-green-dim);
+    }
+
+    .page-footer {
+        text-align: center;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(0, 255, 0, 0.2);
+    }
+
+    .github-link {
+        display: inline-block;
+        margin-top: 1rem;
+        color: var(--terminal-green);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .github-link:hover {
+        color: var(--terminal-green-dim);
+    }
+
+    @media (max-width: 768px) {
+        .projects-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .terminal-bar {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        background: rgba(0, 255, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+        margin: -1.5rem -1.5rem 1rem -1.5rem;
+        border-radius: 7px 7px 0 0;
+    }
+
+    .terminal-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .terminal-button {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 255, 0, 0.3);
+    }
+
+    .terminal-button.close { background: rgba(255, 0, 0, 0.5); }
+    .terminal-button.minimize { background: rgba(255, 165, 0, 0.5); }
+    .terminal-button.maximize { background: rgba(0, 255, 0, 0.5); }
+
+    .terminal-title {
+        margin-left: 1rem;
+        font-size: 0.8rem;
+        color: var(--terminal-green-dim);
+    }
+
+    .command-text {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .command-text::after {
+        content: '';
+        position: absolute;
+        right: -1ch;
+        top: 0;
+        height: 100%;
+        width: 0.5em;
+        background: var(--terminal-green);
+        animation: blink 1s step-end infinite;
+    }
+
+    .cursor {
+        display: inline-block;
+        animation: blink 1s step-end infinite;
+    }
+
+    .terminal-output {
+        opacity: 0;
+        animation: fadeIn 0.3s forwards;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .project-card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, 
+            transparent 0%,
+            var(--terminal-green) 50%,
+            transparent 100%
+        );
+        transform: translateX(-100%);
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+
+    .project-card:hover::before {
+        transform: translateX(100%);
+        opacity: 1;
+    }
+
+    .project-link:hover .cursor {
+        color: var(--terminal-green);
+    }
+</style>
+
+<script>
+    // Add this script to handle command text animations
+    document.addEventListener('DOMContentLoaded', () => {
+        const commandTexts = document.querySelectorAll('.command-text');
+        
+        commandTexts.forEach((element: HTMLElement) => {
+            element.style.opacity = '0';
+            setTimeout(() => {
+                element.style.opacity = '1';
+                typeText(element, element.dataset.text || '', 0);
+            }, 300);
+        });
+    });
+
+    function typeText(element: HTMLElement, text: string, index: number): void {
+        if (index < text.length) {
+            element.textContent = text.substring(0, index + 1);
+            setTimeout(() => typeText(element, text, index + 1), 50);
+        }
+    }
+</script> 

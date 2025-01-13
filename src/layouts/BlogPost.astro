@@ -1,0 +1,203 @@
+---
+import Layout from './Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, date, author, category, tags } = post.data;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+---
+
+<Layout title={`${title} | jordisbored.xyz`}>
+    <article class="blog-post">
+        <header class="post-header">
+            <p class="typing-effect" data-text={`$ cd ~/blog/${post.slug}`}>$ cd ~/blog/{post.slug}</p>
+            <h1 class="post-title command-response" data-text={`> cat ${post.slug}.md`}>> cat {post.slug}.md</h1>
+            
+            <div class="post-meta">
+                <div class="meta-item">
+                    <span class="label">Author:</span>
+                    <span class="value">{author}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="label">Date:</span>
+                    <span class="value">{formattedDate}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="label">Category:</span>
+                    <span class="value">{category}</span>
+                </div>
+            </div>
+
+            <div class="post-tags">
+                {tags.map(tag => (
+                    <span class="tag">#{tag.toLowerCase()}</span>
+                ))}
+            </div>
+        </header>
+
+        <div class="post-content prose prose-invert prose-terminal">
+            <slot />
+        </div>
+
+        <footer class="post-footer">
+            <a href="/blog" class="back-link">
+                <span class="cursor">></span> cd ../
+            </a>
+            <div class="share-links">
+                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`https://jordisbored.xyz/blog/${post.slug}`)}`} target="_blank" rel="noopener noreferrer" class="share-link">
+                    <span class="cursor">></span> share --twitter
+                </a>
+                <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://jordisbored.xyz/blog/${post.slug}`)}&title=${encodeURIComponent(title)}`} target="_blank" rel="noopener noreferrer" class="share-link">
+                    <span class="cursor">></span> share --linkedin
+                </a>
+            </div>
+        </footer>
+    </article>
+</Layout>
+
+<style>
+    .blog-post {
+        max-width: 65ch;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .post-header {
+        margin-bottom: 3rem;
+    }
+
+    .post-title {
+        font-size: 2.5rem;
+        margin: 1rem 0 2rem;
+        color: var(--terminal-green);
+    }
+
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(0, 255, 0, 0.05);
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        border-radius: 4px;
+    }
+
+    .meta-item {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .label {
+        color: var(--terminal-green-dim);
+    }
+
+    .value {
+        color: var(--terminal-green);
+    }
+
+    .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        color: var(--terminal-green-dim);
+        font-size: 0.9rem;
+    }
+
+    .post-content {
+        margin-bottom: 3rem;
+    }
+
+    /* Terminal-style typography */
+    .prose-terminal {
+        --tw-prose-body: var(--terminal-green-dim);
+        --tw-prose-headings: var(--terminal-green);
+        --tw-prose-links: var(--terminal-green);
+        --tw-prose-bold: var(--terminal-green);
+        --tw-prose-code: var(--terminal-green);
+        --tw-prose-pre-code: var(--terminal-green);
+        --tw-prose-pre-bg: rgba(0, 255, 0, 0.05);
+        --tw-prose-quotes: var(--terminal-green-dim);
+        --tw-prose-quote-borders: rgba(0, 255, 0, 0.2);
+    }
+
+    .prose-terminal :global(pre) {
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        background: rgba(0, 255, 0, 0.05) !important;
+    }
+
+    .prose-terminal :global(code) {
+        background: rgba(0, 255, 0, 0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(0, 255, 0, 0.2);
+    }
+
+    .back-link,
+    .share-link {
+        color: var(--terminal-green);
+        text-decoration: none;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .back-link:hover,
+    .share-link:hover {
+        color: var(--terminal-green-dim);
+    }
+
+    .share-links {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .cursor {
+        display: inline-block;
+        animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+        .post-meta {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .post-footer {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .share-links {
+            flex-direction: column;
+        }
+    }
+</style> 

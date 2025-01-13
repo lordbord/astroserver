@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<Layout title="Blog | jordisbored.xyz">
+    <div class="blog-container">
+        <header>
+            <p class="typing-effect" data-text="$ cd ~/blog">$ cd ~/blog</p>
+            <h1 class="command-response" data-text="> ls -la posts/">> ls -la posts/</h1>
+        </header>
+
+        <div class="posts-grid">
+            {sortedPosts.map(post => (
+                <article class="post-card">
+                    <div class="terminal-bar">
+                        <div class="terminal-buttons">
+                            <span class="terminal-button close"></span>
+                            <span class="terminal-button minimize"></span>
+                            <span class="terminal-button maximize"></span>
+                        </div>
+                        <div class="terminal-title">post.md</div>
+                    </div>
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span class="post-date">{post.data.date}</span>
+                            <span class="post-category">{post.data.category}</span>
+                        </div>
+                        <h2 class="post-title">
+                            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                        </h2>
+                        <p class="post-description">{post.data.description}</p>
+                    </header>
+                    <footer class="post-footer">
+                        <div class="post-tags">
+                            {post.data.tags.map(tag => (
+                                <span class="tag">#{tag.toLowerCase()}</span>
+                            ))}
+                        </div>
+                        <a href={`/blog/${post.slug}`} class="read-more">
+                            <span class="cursor">></span> Read more
+                        </a>
+                    </footer>
+                </article>
+            ))}
+        </div>
+
+        <footer class="page-footer">
+            <p class="command command-text" data-text="$ echo 'More posts coming soon...'">$ echo "More posts coming soon..."</p>
+            <a href="https://github.com/lordbord" target="_blank" rel="noopener noreferrer" class="github-link">
+                <span class="cursor">></span> View more on GitHub
+            </a>
+        </footer>
+    </div>
+</Layout>
+
+<style>
+    .blog-container {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    header {
+        margin-bottom: 3rem;
+    }
+
+    .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .post-card {
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        background: rgba(0, 255, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .post-card:hover {
+        transform: translateY(-2px);
+        background: rgba(0, 255, 0, 0.08);
+        border-color: rgba(0, 255, 0, 0.3);
+    }
+
+    .post-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.9rem;
+        color: var(--terminal-green-dim);
+        margin-bottom: 1rem;
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .post-title a {
+        color: var(--terminal-green);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .post-title a:hover {
+        color: var(--terminal-green-dim);
+    }
+
+    .post-description {
+        color: var(--terminal-green-dim);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 255, 0, 0.2);
+    }
+
+    .post-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        color: var(--terminal-green-dim);
+        font-size: 0.9rem;
+    }
+
+    .read-more {
+        color: var(--terminal-green);
+        text-decoration: none;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .read-more:hover {
+        color: var(--terminal-green-dim);
+    }
+
+    @media (max-width: 768px) {
+        .posts-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style> 

@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About | jordisbored.xyz">
+    <div class="about-container">
+        <header>
+            <p class="typing-effect">$ whoami</p>
+            <h1 class="response">> lord jord</h1>
+        </header>
+
+        <section class="terminal-section">
+            <p class="command">$ cat about.txt</p>
+            <div class="response">
+                Software developer with a passion for building things.
+                Currently focused on web development and open source projects.
+                I enjoy exploring new technologies and sharing what I learn.
+            </div>
+        </section>
+
+        <section class="terminal-section">
+            <p class="command">$ ls ./skills</p>
+            <div class="grid">
+                <div class="skill-category">
+                    <h2>> languages</h2>
+                    <ul>
+                        <li>JavaScript/TypeScript</li>
+                        <li>Python</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h2>> frameworks</h2>
+                    <ul>
+                        <li>Astro</li>
+                        <li>Tailwind</li>
+                        <li>Node.js</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h2>> tools</h2>
+                    <ul>
+                        <li>Linux</li>
+                        <li>Git</li>
+                        <li>Neovim</li>
+                        <li>Ableton Live</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="terminal-section">
+            <p class="command">$ cat contact.txt</p>
+            <div class="response">
+                <p>Feel free to reach out:</p>
+                <div class="links">
+                    <a href="https://github.com/lordbord" target="_blank" rel="noopener noreferrer">
+                        > github/lordbord
+                    </a>
+                    <a href="mailto:hello@jordisbored.xyz">
+                        > hello@jordisbored.xyz
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .about-container {
+        max-width: 48rem;
+        margin: 0 auto;
+    }
+
+    header {
+        margin-bottom: 3rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .terminal-section {
+        margin-bottom: 3rem;
+    }
+
+    .command {
+        color: var(--terminal-green);
+        margin-bottom: 0.5rem;
+    }
+
+    .response {
+        color: var(--terminal-green-dim);
+        white-space: pre-line;
+        line-height: 1.6;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .skill-category h2 {
+        color: var(--terminal-green);
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-category ul {
+        list-style: none;
+        padding: 0;
+        color: var(--terminal-green-dim);
+    }
+
+    .skill-category li {
+        margin-bottom: 0.25rem;
+        padding-left: 1rem;
+        position: relative;
+    }
+
+    .skill-category li::before {
+        content: '>';
+        position: absolute;
+        left: 0;
+        color: var(--terminal-green);
+        opacity: 0.5;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .links a {
+        color: var(--terminal-green);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .links a:hover {
+        color: var(--terminal-green-dim);
+    }
+
+    @media (max-width: 768px) {
+        .grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+    }
+</style> 

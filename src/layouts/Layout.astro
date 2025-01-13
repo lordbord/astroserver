@@ -1,22 +1,156 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title?: string;
+}
+
+const { title = 'jordisbored.xyz' } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<meta name="description" content="Personal website of Jord - Software Developer & Tech Enthusiast" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<slot />
+		<Header />
+		<div class="marquee-container">
+			<div class="marquee">
+				<div class="marquee-content">
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+				</div>
+				<div class="marquee-content" aria-hidden="true">
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
+				</div>
+			</div>
+		</div>
+		<main>
+			<slot />
+		</main>
+		<Footer />
 	</body>
 </html>
 
-<style>
-	html,
+<style is:global>
+	:root {
+		--terminal-green: #00ff00;
+		--terminal-green-dim: #00cc00;
+	}
+
+	html {
+		font-family: 'Kode Mono', monospace;
+		scroll-behavior: smooth;
+	}
+	
 	body {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		min-height: 100vh;
+		background: #000;
+		color: var(--terminal-green);
+		display: flex;
+		flex-direction: column;
 	}
-</style>
+
+	main {
+		flex-grow: 1;
+		max-width: 80rem;
+		margin: 0 auto;
+		padding: 6rem 1rem 2rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	@keyframes cursor-blink {
+		0%, 100% { opacity: 0; }
+		50% { opacity: 1; }
+	}
+
+	.cursor::after {
+		content: '_';
+		animation: cursor-blink 1s infinite;
+	}
+
+	@keyframes typing {
+		from { width: 0 }
+		to { width: 100% }
+	}
+
+	.typing-effect {
+		position: relative;
+		white-space: nowrap;
+		margin: 0;
+		animation: typing 2s steps(40, end);
+	}
+
+	.text-terminal-green { color: var(--terminal-green); }
+	.text-terminal-green-dim { color: var(--terminal-green-dim); }
+	.border-terminal-green { border-color: var(--terminal-green); }
+
+	/* Marquee styles */
+	.marquee-container {
+		width: 100%;
+		background: rgba(0, 255, 0, 0.1);
+		overflow: hidden;
+		border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+		margin-top: 4rem;
+		padding: 0.5rem 0;
+	}
+
+	.marquee {
+		display: flex;
+		width: fit-content;
+		animation: scroll 30s linear infinite;
+		transform: translateZ(0);
+	}
+
+	.marquee-content {
+		display: flex;
+		white-space: nowrap;
+	}
+
+	.marquee span {
+		display: inline-block;
+		padding: 0 1rem;
+		font-weight: bold;
+	}
+
+	@keyframes scroll {
+		0% { transform: translateX(0); }
+		100% { transform: translateX(-50%); }
+	}
+
+	@keyframes rainbow {
+		0% { color: #ff0000; }
+		14% { color: #ff7f00; }
+		28% { color: #ffff00; }
+		42% { color: #00ff00; }
+		57% { color: #0000ff; }
+		71% { color: #4b0082; }
+		85% { color: #9400d3; }
+		100% { color: #ff0000; }
+	}
+
+	.rainbow-text {
+		animation: rainbow 8s linear infinite;
+		font-size: 0.9rem;
+		letter-spacing: 0.5px;
+	}
+
+	/* Adjust main padding to account for marquee */
+	main {
+		padding-top: 2rem;
+	}
+</style> 
