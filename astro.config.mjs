@@ -6,7 +6,7 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [tailwind()],
   site: 'https://lordbord.github.io',
-  base: '/',
+  base: '/astroserver',
   build: {
     assets: 'assets'
   }
