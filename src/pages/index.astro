@@ -3,103 +3,225 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="jordisbored.xyz">
-    <div class="max-w-2xl mx-auto mt-8">
-        <div class="font-kode-mono space-y-6 text-terminal-green">
-            <!-- Welcome Message -->
-            <div class="space-y-2">
-                <p class="typing-effect">$ whoami</p>
-                <p class="text-terminal-green-dim">jordisbored</p>
-                <p class="typing-effect">$ cat welcome.txt</p>
-                <div class="text-terminal-green-dim whitespace-pre-line">
-                    Welcome to my digital space! I'm a software developer and tech enthusiast.
-                    I build things for the web and write about technology.
-                </div>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="terminal-button close"></span>
+                <span class="terminal-button minimize"></span>
+                <span class="terminal-button maximize"></span>
             </div>
-
-            <!-- Skills -->
-            <div class="space-y-2">
-                <p class="typing-effect">$ ls ./skills/</p>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-terminal-green-dim">
-                    <span>> javascript</span>
-                    <span>> python</span>
-                    <span>> react</span>
-                    <span>> node.js</span>
-                    <span>> docker</span>
-                    <span>> linux</span>
-                </div>
+            <span class="terminal-title">terminal@jordisbored.xyz</span>
+        </div>
+        <div class="terminal-window" id="terminal">
+            <div class="terminal-output">
+                <p class="welcome-text">Welcome to jordisbored.xyz (Terminal v1.0.0)</p>
+                <p class="help-text">Type 'help' for available commands.</p>
             </div>
-
-            <!-- Latest Projects -->
-            <div class="space-y-2">
-                <p class="typing-effect">$ ls ./projects/latest/</p>
-                <div class="space-y-4 text-terminal-green-dim">
-                    <div class="border border-terminal-green/20 p-4 rounded-lg hover:bg-terminal-green/5 transition-colors">
-                        <h3 class="text-terminal-green">> Project One</h3>
-                        <p>A modern web application built with React and Node.js</p>
-                    </div>
-                    <div class="border border-terminal-green/20 p-4 rounded-lg hover:bg-terminal-green/5 transition-colors">
-                        <h3 class="text-terminal-green">> Project Two</h3>
-                        <p>Mobile-first e-commerce platform with real-time updates</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation -->
-            <div class="space-y-2">
-                <p class="typing-effect">$ ls ./navigation/</p>
-                <div class="space-y-2">
-                    <a href="/blog" class="block p-2 border border-terminal-green/20 rounded-lg hover:bg-terminal-green/5 transition-colors">
-                        <span class="text-terminal-green">> cd ./blog</span>
-                        <span class="text-terminal-green-dim ml-4">// Read my thoughts and tutorials</span>
-                    </a>
-                    <a href="/projects" class="block p-2 border border-terminal-green/20 rounded-lg hover:bg-terminal-green/5 transition-colors">
-                        <span class="text-terminal-green">> cd ./projects</span>
-                        <span class="text-terminal-green-dim ml-4">// View my work</span>
-                    </a>
-                    <a href="/about" class="block p-2 border border-terminal-green/20 rounded-lg hover:bg-terminal-green/5 transition-colors">
-                        <span class="text-terminal-green">> cd ./about</span>
-                        <span class="text-terminal-green-dim ml-4">// Learn more about me</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Contact -->
-            <div class="space-y-2">
-                <p class="typing-effect">$ cat contact.txt</p>
-                <div class="text-terminal-green-dim space-y-2">
-                    <p>Feel free to reach out:</p>
-                    <div class="flex space-x-4">
-                        <a href="https://github.com/jordisbored" target="_blank" rel="noopener noreferrer" 
-                           class="hover:text-terminal-green transition-colors">
-                            > github
-                        </a>
-                        <a href="https://twitter.com/jordisbored" target="_blank" rel="noopener noreferrer"
-                           class="hover:text-terminal-green transition-colors">
-                            > twitter
-                        </a>
-                    </div>
-                </div>
+            <div class="terminal-input-line">
+                <span class="prompt">visitor@jordisbored.xyz:~$</span>
+                <input type="text" class="terminal-input" id="terminalInput" spellcheck="false" autocomplete="off">
             </div>
         </div>
     </div>
 </Layout>
 
 <style>
-    @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
+    .terminal-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: rgba(0, 0, 0, 0.9);
+        border: 1px solid var(--terminal-green);
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
     }
 
-    .typing-effect {
-        position: relative;
+    .terminal-header {
+        padding: 0.5rem 1rem;
+        background: rgba(0, 255, 0, 0.1);
+        border-bottom: 1px solid var(--terminal-green);
+        display: flex;
+        align-items: center;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .terminal-buttons {
+        display: flex;
+        gap: 0.5rem;
+        margin-right: 1rem;
+    }
+
+    .terminal-button {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 255, 0, 0.3);
+    }
+
+    .close { background: rgba(255, 0, 0, 0.5); }
+    .minimize { background: rgba(255, 165, 0, 0.5); }
+    .maximize { background: rgba(0, 255, 0, 0.5); }
+
+    .terminal-title {
+        color: var(--terminal-green);
+        font-size: 0.9rem;
+    }
+
+    .terminal-window {
+        padding: 1rem;
+        min-height: 400px;
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
+    .terminal-output {
+        margin-bottom: 1rem;
+    }
+
+    .terminal-output p {
+        margin: 0.25rem 0;
+        color: var(--terminal-green-dim);
+    }
+
+    .terminal-input-line {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .prompt {
+        color: var(--terminal-green);
         white-space: nowrap;
-        margin: 0;
-        animation: typing 2s steps(40, end);
     }
 
-    /* Add a blinking cursor to the last typing effect */
-    .typing-effect:last-of-type::after {
-        content: "_";
-        animation: cursor-blink 1s infinite;
+    .terminal-input {
+        background: transparent;
+        border: none;
+        color: var(--terminal-green);
+        font-family: 'Kode Mono', monospace;
+        font-size: 1rem;
+        flex-grow: 1;
+        padding: 0;
+        margin: 0;
+        outline: none;
     }
-</style> 
+
+    .welcome-text {
+        color: var(--terminal-green) !important;
+    }
+
+    .help-text {
+        opacity: 0.7;
+    }
+
+    /* Custom Scrollbar */
+    .terminal-window::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .terminal-window::-webkit-scrollbar-track {
+        background: rgba(0, 255, 0, 0.1);
+    }
+
+    .terminal-window::-webkit-scrollbar-thumb {
+        background: var(--terminal-green-dim);
+        border-radius: 4px;
+    }
+</style>
+
+<script>
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('terminalInput') as HTMLInputElement;
+    let commandHistory: string[] = [];
+    let historyIndex = -1;
+
+    const commands = {
+        help: () => `Available commands:
+  about     - Learn about me
+  projects  - View my projects
+  skills    - List my technical skills
+  contact   - Get my contact information
+  clear     - Clear the terminal
+  help      - Show this help message`,
+
+        about: () => `Hi, I'm Jord!
+A software developer and tech enthusiast.
+I build things for the web and write about technology.`,
+
+        projects: () => `Recent Projects:
+> jordisbored.xyz - A modern web application
+> CLI Tools - Various command line utilities
+> Music Production - Electronic music projects`,
+
+        skills: () => `Technical Skills:
+Languages: JavaScript, Python, TypeScript
+Frontend:  React, Astro, Tailwind
+Backend:   Node.js, Express
+Tools:     Git, Linux, Docker
+Music:     Ableton Live, Sound Design`,
+
+        contact: () => `Contact Information:
+GitHub:  github.com/jordisbored
+Twitter: twitter.com/jordisbored
+Email:   hello@jordisbored.xyz`,
+
+        clear: () => {
+            const output = terminal?.querySelector('.terminal-output');
+            if (output) output.innerHTML = '';
+            return '';
+        }
+    };
+
+    function addOutput(text: string, className = '') {
+        const output = terminal?.querySelector('.terminal-output');
+        const p = document.createElement('p');
+        p.textContent = text;
+        if (className) p.className = className;
+        output?.appendChild(p);
+        terminal?.scrollTo(0, terminal.scrollHeight);
+    }
+
+    function handleCommand(cmd: string) {
+        const command = cmd.toLowerCase().trim();
+        
+        if (command) {
+            addOutput(`visitor@jordisbored.xyz:~$ ${command}`);
+            commandHistory.push(command);
+            historyIndex = commandHistory.length;
+
+            if (command in commands) {
+                const output = commands[command as keyof typeof commands]();
+                if (output) addOutput(output);
+            } else {
+                addOutput(`Command not found: ${command}. Type 'help' for available commands.`);
+            }
+        }
+
+        input.value = '';
+        terminal?.scrollTo(0, terminal.scrollHeight);
+    }
+
+    input?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            handleCommand(input.value);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                historyIndex--;
+                input.value = commandHistory[historyIndex];
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                input.value = commandHistory[historyIndex];
+            } else {
+                historyIndex = commandHistory.length;
+                input.value = '';
+            }
+        }
+    });
+
+    // Auto-focus the input
+    input?.focus();
+    window.addEventListener('click', () => input?.focus());
+</script> 

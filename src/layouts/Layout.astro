@@ -1,5 +1,5 @@
 ---
-import Header from '../components/Header.astro';
+import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
@@ -20,23 +20,7 @@ const { title = 'jordisbored.xyz' } = Astro.props;
 		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<Header />
-		<div class="marquee-container">
-			<div class="marquee">
-				<div class="marquee-content">
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-				</div>
-				<div class="marquee-content" aria-hidden="true">
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-					<span class="rainbow-text">🚧 UNDER CONSTRUCTION: pardon our dust while we build something cool 🚧</span>
-				</div>
-			</div>
-		</div>
+		<Nav />
 		<main>
 			<slot />
 		</main>
@@ -74,13 +58,14 @@ const { title = 'jordisbored.xyz' } = Astro.props;
 	}
 
 	@keyframes cursor-blink {
-		0%, 100% { opacity: 0; }
-		50% { opacity: 1; }
+		0%, 70% { opacity: 1; }
+		71%, 100% { opacity: 0; }
 	}
 
 	.cursor::after {
 		content: '_';
-		animation: cursor-blink 1s infinite;
+		animation: cursor-blink 1.2s ease-in-out infinite;
+		opacity: 0.7;
 	}
 
 	@keyframes typing {
@@ -98,59 +83,4 @@ const { title = 'jordisbored.xyz' } = Astro.props;
 	.text-terminal-green { color: var(--terminal-green); }
 	.text-terminal-green-dim { color: var(--terminal-green-dim); }
 	.border-terminal-green { border-color: var(--terminal-green); }
-
-	/* Marquee styles */
-	.marquee-container {
-		width: 100%;
-		background: rgba(0, 255, 0, 0.1);
-		overflow: hidden;
-		border-bottom: 1px solid rgba(0, 255, 0, 0.2);
-		margin-top: 4rem;
-		padding: 0.5rem 0;
-	}
-
-	.marquee {
-		display: flex;
-		width: fit-content;
-		animation: scroll 30s linear infinite;
-		transform: translateZ(0);
-	}
-
-	.marquee-content {
-		display: flex;
-		white-space: nowrap;
-	}
-
-	.marquee span {
-		display: inline-block;
-		padding: 0 1rem;
-		font-weight: bold;
-	}
-
-	@keyframes scroll {
-		0% { transform: translateX(0); }
-		100% { transform: translateX(-50%); }
-	}
-
-	@keyframes rainbow {
-		0% { color: #ff0000; }
-		14% { color: #ff7f00; }
-		28% { color: #ffff00; }
-		42% { color: #00ff00; }
-		57% { color: #0000ff; }
-		71% { color: #4b0082; }
-		85% { color: #9400d3; }
-		100% { color: #ff0000; }
-	}
-
-	.rainbow-text {
-		animation: rainbow 8s linear infinite;
-		font-size: 0.9rem;
-		letter-spacing: 0.5px;
-	}
-
-	/* Adjust main padding to account for marquee */
-	main {
-		padding-top: 2rem;
-	}
 </style> 
