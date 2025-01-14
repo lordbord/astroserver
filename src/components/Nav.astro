@@ -1,9 +1,9 @@
 ---
 const navItems = [
-    { path: 'https://lordbord.github.io/astroserver/about/', label: 'about' },
-    { path: 'https://lordbord.github.io/astroserver/blog/', label: 'blog' },
-    { path: 'https://lordbord.github.io/astroserver/music/', label: 'music' },
-    { path: 'https://lordbord.github.io/astroserver/projects/', label: 'projects' }
+    { path: '/astroserver/about/', label: 'about' },
+    { path: '/astroserver/blog/', label: 'blog' },
+    { path: '/astroserver/music/', label: 'music' },
+    { path: '/astroserver/projects/', label: 'projects' }
 ];
 
 const currentPath = Astro.url.pathname;
@@ -12,7 +12,7 @@ const currentPath = Astro.url.pathname;
 <header>
     <nav>
         <div class="nav-content">
-            <a href="https://lordbord.github.io/astroserver/" class="logo">
+            <a href="/astroserver/" class="logo">
                 <span class="cursor">></span> jordisbored.xyz
             </a>
             
